@@ -55,8 +55,8 @@ if (mysqli_num_rows($result) > 0) {
             <h2>ID: " . $row["id"] . "</h2>
             <h3>Breed: " . $row["breed"] . "</h3>
             <h3>Price: " . $row["price"] . "</h3>
-            <button onclick='editAnimal(" . $row["id"] . ")'>Edit</button>
-            <button onclick='updateAnimal(" . $row["id"] . ")'>Update</button>
+            <button>Edit</button>
+            <button>Update</button>
             <button onclick='deleteAnimal(" . $row["id"] . ")'>Delete</button>
           </div><br>";
   }
@@ -68,21 +68,45 @@ if (mysqli_num_rows($result) > 0) {
 <span><?php echo $error ?></span>
 
     <script>
-
-  function editAnimal(id) {
-    window.location.href = "dashboard.php?id=" + id;
-  }
-
-  function updateAnimal(id) {
-    window.location.href = "dashboard.php?id=" + id;
-  }
-
   function deleteAnimal(id) {
     if (confirm("Are you sure you want to delete this animal?")) {
-      window.location.href = "dashboard.php?id=" + id;
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            // Deletion successful, refresh the page
+            window.location.reload();
+          } else {
+            console.error("Deletion failed: " + xhr.responseText);
+          }
+        }
+      };
+      xhr.open("DELETE", "dashboard.php?id=" + id, true);
+      xhr.send();
     }
   }
 </script>
+
+<!--Delete Animal-->
+<?php
+$conn = mysqli_connect("localhost", "root", "", "ourdairy");
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+if (isset($_GET['id'])) {
+  $animalId = $_GET['id'];
+
+  $sql = "DELETE FROM animal WHERE id = '$animalId'";
+  if (mysqli_query($conn, $sql)) {
+    
+    echo "Deletion Successful";
+    exit;
+  } else {
+    echo "Deletion failed: " . mysqli_error($conn);
+  }
+} 
+mysqli_close($conn);
+?>
 
   </body>
 </html>
