@@ -73,9 +73,13 @@ if(isset($_REQUEST["addAnimal"])){
 			<input type="text" placeholder="Enter Health Status" name="status" required/>
 			<input type="text" placeholder="Enter Milk Production" name="milk" required/>
 			<input type="text" placeholder="Enter Milk Temperature" name="m_t" required/>
-      <div class="checkbox-container">
-      <input type="checkbox" name="pregnant" id="pregnant-checkbox">
-      <label for="pregnant-checkbox" class="checkbox-label">Pregnant</label>
+      <div class="radio-group">
+      <input type="radio" name="pregnant" required id="pregnant-radio-1" value="1">
+      <label for="pregnant-radio-1">Pregnant!</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" name="pregnant" required id="pregnant-radio-0" value="0">
+      <label for="pregnant-radio-0">Not Pregnant!</label>
     </div>
       <button type="submit" name="addAnimal">Add</button>
 			<span style='color:red'><?php echo $error ?></span>
