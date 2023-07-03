@@ -55,9 +55,8 @@ if (mysqli_num_rows($result) > 0) {
             <h2>ID: " . $row["id"] . "</h2>
             <h3>Breed: " . $row["breed"] . "</h3>
             <h3>Price: " . $row["price"] . "</h3>
-            <button>Edit</button>
-            <button>Update</button>
-            <button onclick='deleteAnimal(" . $row["id"] . ")'>Delete</button>
+            <button onclick='updateAnimal(" . $row["id"] . ")'>Update</button>
+            <button onclick='deleteAnimal(" . $row["id"] . ")'>Delete</button> 
           </div><br>";
   }
 } else {
@@ -74,7 +73,6 @@ if (mysqli_num_rows($result) > 0) {
       xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status === 200) {
-            // Deletion successful, refresh the page
             window.location.reload();
           } else {
             console.error("Deletion failed: " + xhr.responseText);
@@ -84,6 +82,10 @@ if (mysqli_num_rows($result) > 0) {
       xhr.open("DELETE", "dashboard.php?id=" + id, true);
       xhr.send();
     }
+  }
+  function updateAnimal(id) {
+
+    window.location.href = "update-animal.php?id=" + id;
   }
 </script>
 
@@ -107,6 +109,5 @@ if (isset($_GET['id'])) {
 } 
 mysqli_close($conn);
 ?>
-
   </body>
 </html>
