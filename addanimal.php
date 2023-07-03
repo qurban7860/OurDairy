@@ -10,6 +10,8 @@ if(isset($_REQUEST["addAnimal"])){
   $status = $_REQUEST["status"];
   $mtemp = $_REQUEST["m_t"];
   $milk = $_REQUEST["milk"];
+  $pregnant = isset($_POST['pregnant']) ? 1 : 0;
+
   
    $m_d=(int)$milk;
 
@@ -32,8 +34,8 @@ if(isset($_REQUEST["addAnimal"])){
   $m_m=4*($m_w);
   $m_a=12*($m_m);
 
-  $sql = "INSERT INTO animal (id, breed, price, temperature, status, milk, mtemp, mgroup) 
-                       VALUES (' ', '$breed', '$price', '$temp', '$status', '$milk', '$mtemp', '$m_g')";
+  $sql = "INSERT INTO animal (id, breed, price, temperature, status, milk, mtemp, mgroup, pregnant) 
+                       VALUES (' ', '$breed', '$price', '$temp', '$status', '$milk', '$mtemp', '$m_g', '$pregnant')";
   if ($conn->query($sql) === TRUE) {
      $message = "Animal Added Successfully!";
   }
@@ -63,6 +65,7 @@ if(isset($_REQUEST["addAnimal"])){
 
 <div id="container1">
 		<form action="addanimal.php" method="POST">
+
 			<h2>Add animal record</h2>
 			<input type="text" placeholder="Enter Breed" name="breed" required/>
 			<input type="text" placeholder="Enter Price" name="price" required/>
@@ -70,9 +73,11 @@ if(isset($_REQUEST["addAnimal"])){
 			<input type="text" placeholder="Enter Health Status" name="status" required/>
 			<input type="text" placeholder="Enter Milk Production" name="milk" required/>
 			<input type="text" placeholder="Enter Milk Temperature" name="m_t" required/>
-
-            <button type="submit" name="addAnimal">Add</button>
-
+      <div class="checkbox-container">
+      <input type="checkbox" name="pregnant" id="pregnant-checkbox">
+      <label for="pregnant-checkbox" class="checkbox-label">Pregnant</label>
+    </div>
+      <button type="submit" name="addAnimal">Add</button>
 			<span style='color:red'><?php echo $error ?></span>
 
 		</form>
